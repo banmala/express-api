@@ -13,3 +13,4 @@ Middlewares
             - Sanitize request data 
             - Authentication => loggedInUser or not/ valid
             - Authorization => roles and permission
+    4. Routing Level Middlewares

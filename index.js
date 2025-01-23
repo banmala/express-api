@@ -4,6 +4,8 @@ import cors from "cors"
 
 const app = express()
 
+const router = express.Router()
+
 app.use(express.json())
 
 
@@ -19,6 +21,11 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+
+// app.get("/test",(req,res)=>{
+//     res.end("Response from test endpoint")
+// })
 
 app.use((req, res, next)=>{
     console.log("This is applicaiton level middleware")
@@ -45,7 +52,7 @@ app.use((req, res, next)=>{
     }
 })
 
-//middlewares have access to req.body ko data
+//middlewares have access to req.body ko data and can update req object
 app.use(function (req,res,next){
     const data = req.body
     console.log("data: ", data)
@@ -56,43 +63,60 @@ app.use(function (req,res,next){
     next();
 })
 
-app.get("/test",(req,res)=>{
-    res.end("Response from test endpoint")
+
+// /student/exam => endpoint
+
+
+// /student/:id 
+
+
+//Query and params
+app.get("/testquery/:id",(req,res)=>{
+    const params = req.params
+    const query = req.query
+    console.log("Params: ", params)
+    console.log("Query: ", query)
+
+    res.end("return from query testig")
 })
+
+// //authentication and authorization 
+// app.use((req, res, next)=>{
+//     let isLoggedIn = true;
+//     if(isLoggedIn){
+//         next();
+//     }else{
+//         res.end("I have access to response cycle.")
+//     }
+// },(req, res, next)=>{
+//     let isAdmin = true;
+//     if(isAdmin){
+//         next();
+//     }else{
+//         res.end("Only admins are allowded to enter")
+//     }
+// })
+
+
+
 
 app.get("/",(req,res)=>{
     res.end("response from main endpoint")
 })
 
-app.post("/",(req,res)=>{
-    res.end("response from post request")
-})
+// app.post("/",(req,res)=>{
+//     console.log("body at / endpoint: ", req.body)
+//     res.end("response from post request")
+// })
 
-app.post("/login",(req,res)=>{
-    console.log("req=> body at login : ", req.body)
-    res.end("response from login")
-})
+
 
 // app.post("/login",(req,res)=>{
-//     const{email, password} =req.body
-//     //email exist
-//     //password correct
-//     //token generate => return 
-
-//     res.end("From Login")
+//     console.log("req=> body at login : ", req.body)
+//     res.end("response from login")
 // })
 
-// app.get("/student",()=>{
-//     //get token
-//     //token decrypt
-//     //
 
-//     //database => get info
-//     //sanitize info
-//     // return info
-// })
-
-// const router = express.Router();
 
 // // Router-level middleware
 // router.use((req, res, next) => {
@@ -101,8 +125,14 @@ app.post("/login",(req,res)=>{
 // });
 
 // router.get('/test', (req, res) => {
-//   res.send('Router-level middleware example');
+//     res.send('Router-level middleware example');
 // });
+// router.get('/test/ing', (req, res) => {
+//     res.send('Router-level middleware example testign ');
+// });
+// router.post('/test',(req,res)=>{
+//     res.send("POst request to /test endpoint")
+// })
 
 // app.use('/api', router); // Mount the router on the '/api' path
 
@@ -112,3 +142,5 @@ app.listen(3005,(err)=>{
     }
     console.log("Server is listening at port 3005")
 })
+
+//query and params
