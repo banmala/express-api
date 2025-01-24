@@ -14,3 +14,5 @@ Middlewares
             - Authentication => loggedInUser or not/ valid
             - Authorization => roles and permission
     4. Routing Level Middlewares
+
+    5. Error Handling Middlewares
