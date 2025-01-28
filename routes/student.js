@@ -1,12 +1,7 @@
 import {Router} from "express";
-import testMiddleware from "../middlewares/test-middleware.js";
-import authMiddleware from "../middlewares/auth.middleware.js";
-
 
 const router = Router()
 
-
-// router.use(authMiddleware)
 
 router.get("/", (req,res)=>{
     
@@ -20,7 +15,6 @@ router.delete("/:id",(req,res)=>{
 })
 
 router.post("/",async (req,res)=>{
-    // const student = await prisma.user.create({data:{name:"Sunil", email:"banmala@gmail.com"}})
     res.send("Created new student")
 })
 

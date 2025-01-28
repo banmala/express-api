@@ -7,7 +7,6 @@ const port = 3005
 app.use(express.json())
 
 app.get("/",(req,res)=>{
-    res.send("Hello")
     res.end("Hello World from node backend!")
 })
 
@@ -19,7 +18,6 @@ app.use((error,req,res,next)=>{
     res.status(404).send({success:false, error:error})
     
 })
-
 
 app.listen(port,(error)=>{
     if(error){
