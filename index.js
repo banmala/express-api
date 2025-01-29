@@ -1,5 +1,6 @@
 import express from "express";
 import routers from "./routes/routes.js"
+import { transferableAbortSignal } from "util";
 
 const app = express()
 const port = 3005
@@ -25,3 +26,8 @@ app.listen(port,(error)=>{
     }
     console.log("Server is running at port: ",port);
 });
+
+
+
+// 
+// Create tables: permission, role, user, student, teacher, department, section, year, student detail, exam, report

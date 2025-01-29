@@ -1,8 +1,8 @@
 import {Router} from "express";
-import authRoute from "./auth.js";
-import studentRoute from "./student.js"
-import roleRouter from "./role.js"
-import permissionRouter from "./permission.js"
+import authRoute from "./auth.route.js";
+import studentRoute from "./student.route.js"
+import roleRouter from "./role.route.js"
+import permissionRouter from "./permission.route.js"
 
 const router = Router()
 
