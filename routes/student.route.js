@@ -1,21 +1,35 @@
 import {Router} from "express";
+import { createStudent, getStudent } from "../services/student.services.js";
 
 const router = Router()
 
-
-router.get("/", (req,res)=>{
-    
-    res.send("List of students")
-})
-
-router.delete("/:id",(req,res)=>{
-    const id = req.params.id
-    console.log("id: ",id)
-    res.end("Deleted student of rid:"+id)
-})
-
 router.post("/",async (req,res)=>{
-    res.send("Created new student")
+    try{
+        const result = await createStudent(req);
+        res.send(result)
+    }catch(error){
+        console.log("Error: ", error)
+        res.status(400).send({
+            message:"Error Occured",
+            error:error
+        });
+    }
 })
+
+router.get("/",async (req,res)=>{
+    try{
+        const result = await getStudent(req);
+        res.send(result)
+    }catch(error){
+        console.log("Error: ", error)
+        res.status(400).send({
+            message:"Error Occured",
+            error:error
+        });
+    }
+})
+
+
+
 
 export default router;
