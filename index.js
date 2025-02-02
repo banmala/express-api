@@ -17,7 +17,7 @@ app.use("/api",routers)
 app.use((error,req,res,next)=>{
     console.log("Error: ", error)
     res.status(404).send({success:false, error:error})
-    
+    return
 })
 
 app.listen(port,(error)=>{

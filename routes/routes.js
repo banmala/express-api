@@ -8,10 +8,15 @@ import authentication from "../middlewares/authentication.js"
 
 const router = Router()
 
+// router.use((req,res,next)=>{
+//     const {method, url} =req
+//     console.log("Method: ", method, " and Url: ", url)
+//     next();
+// })
 
 router.use("/auth",authRoute)
 
-router.use(authentication)
+router.use(authentication);
 
 router.use("/student",studentRoute)
 router.use("/role",roleRouter)

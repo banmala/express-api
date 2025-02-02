@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import "dotenv/config.js"
 import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
 
 const prisma = new PrismaClient()
 
@@ -18,9 +19,13 @@ const login = async (req) =>{
     if(!user){
         return("User of given email doesnot exists!");
     }
-    if(password != user.password){
-        return("Password doesnot match!");
-    }
+    bcrypt.compare(password, user.password, function(err, result) {
+        if(err){
+            return("Password doesnot match!");
+        }
+    });
+    // if(password != user.password){
+    // }
     const token = jwt.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 60),
         data: user
@@ -31,7 +36,7 @@ const login = async (req) =>{
 
 const register = async (req) => {
     const {email, password, roleId} = req.body
-
+    password = bcrypt.hash(password, 10);
     const result = await prisma.user.create({
         data:{
             email,

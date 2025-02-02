@@ -1,28 +1,30 @@
 import {Router} from "express";
 import { createStudent, getStudent } from "../services/student.services.js";
+import { checkPermission } from "../middlewares/authorization.js";
 
 const router = Router()
 
-router.post("/",async (req,res)=>{
+router.post(
+    "/",checkPermission("create-user"),async (req,res)=>{
     try{
         const result = await createStudent(req);
         res.send(result)
     }catch(error){
         console.log("Error: ", error)
-        res.status(400).send({
+        res.send({
             message:"Error Occured",
             error:error
         });
     }
 })
 
-router.get("/",async (req,res)=>{
+router.get("/",checkPermission("read-user"),async (req,res)=>{
     try{
         const result = await getStudent(req);
         res.send(result)
     }catch(error){
         console.log("Error: ", error)
-        res.status(400).send({
+        res.json({
             message:"Error Occured",
             error:error
         });

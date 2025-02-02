@@ -5,6 +5,14 @@ const prisma = new PrismaClient()
 
 const createStudent = async (req) => {
     const {name, roll, address, dob, departmentId} = req.body
+    const checkStudentExist = await prisma.student.findFirst({
+        where:{
+            roll: roll
+        }
+    })
+    if(checkStudentExist){
+        return "STudent of given roll number already exist";
+    }
     const dateOfBirth = new Date(dob)
     const result = await prisma.student.create({
         data:{
