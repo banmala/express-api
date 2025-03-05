@@ -27,7 +27,7 @@ model Role {
   id         Int          @id @default(autoincrement())
   name       String       @unique
   permission Permission[]
-  user       User[]
+  User       User[]
 }
 
 model Permission {
@@ -38,17 +38,26 @@ model Permission {
 }
 
 model Student {
-  id           Int        @id @default(autoincrement())
-  name         String
-  roll         String     @unique
-  address      String
-  dob          DateTime
-  department   Department @relation(fields: [departmentId], references: [id])
-  departmentId Int
+  id              Int           @id @default(autoincrement())
+  name            String
+  roll            String        @unique
+  address         String
+  dob             DateTime
+  department      Department    @relation(fields: [departmentId], references: [id])
+  departmentId    Int
+  studentDetail   StudentDetail @relation(fields: [studentDetailId], references: [id])
+  studentDetailId Int
 }
 
 model Department {
   id      Int       @id @default(autoincrement())
   name    String
   Student Student[]
+}
+
+model StudentDetail {
+  id         Int       @id @default(autoincrement())
+  fatherName String
+  motherName String
+  Student    Student[]
 }

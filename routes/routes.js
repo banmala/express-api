@@ -17,7 +17,7 @@ const router = Router()
 router.use("/auth",authRoute)
 
 router.use(authentication);
-
+//
 router.use("/student",studentRoute)
 router.use("/role",roleRouter)
 router.use("/permission",permissionRouter)

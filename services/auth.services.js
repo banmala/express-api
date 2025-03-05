@@ -5,52 +5,54 @@ import bcrypt from "bcrypt"
 
 const prisma = new PrismaClient()
 
-const login = async (req) =>{
-    const {email, password} = req.body;
+const login = async (req) => {
+    const { email, password } = req.body;
 
     const user = await prisma.user.findFirst({
-        where:{
+        where: {
             email: email
         },
         include: {
             role: true
         }
     })
-    if(!user){
-        return("User of given email doesnot exists!");
+    if (!user) {
+        return ("User of given email doesnot exists!");
     }
-    bcrypt.compare(password, user.password, function(err, result) {
-        if(err){
-            return("Password doesnot match!");
+    bcrypt.compare(password, user.password, function (err, result) {
+        if (err) {
+            return ("Password doesnot match!");
         }
     });
-    // if(password != user.password){
-    // }
     const token = jwt.sign({
         exp: Math.floor(Date.now() / 1000) + (60 * 60),
         data: user
     }, process.env.jwtsecretcode);
 
-    return {token}; //token: token
+    return { token, user };
 }
 
 const register = async (req) => {
-    const {email, password, roleId} = req.body
+    const { email, password, roleId } = req.body
     password = bcrypt.hash(password, 10);
-    const result = await prisma.user.create({
-        data:{
+    const user = await prisma.user.create({
+        data: {
             email,
             password,
-            role:{
-                connect:{id: roleId}
+            role: {
+                connect: { id: roleId }
             }
         }
     })
-    return result
+    const token = jwt.sign({
+        exp: Math.floor(Date.now() / 1000) + (60 * 60),
+        data: user
+    }, process.env.jwtsecretcode);
+    return { user, token }
 }
 
 
 
 
 
-export {login, register}
+export { login, register }
